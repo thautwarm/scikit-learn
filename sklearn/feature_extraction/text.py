@@ -127,6 +127,11 @@ class VectorizerMixin(object):
         # handle stop words
         if stop_words is not None:
             tokens = [w for w in tokens if w not in stop_words]
+        else:
+            # Traversing a large list costs much.
+            # If possible do not traverse.
+            if not isinstance(tokens, list) or not isinstance(tokens, tuple):
+                tokens = list(tokens)
 
         # handle token n-grams
         min_n, max_n = self.ngram_range
@@ -135,7 +140,7 @@ class VectorizerMixin(object):
             if min_n == 1:
                 # no need to do any slicing for unigrams
                 # just iterate through the original tokens
-                tokens = list(original_tokens)
+                tokens = original_tokens
                 min_n += 1
             else:
                 tokens = []
