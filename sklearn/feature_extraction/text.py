@@ -140,6 +140,7 @@ class VectorizerMixin(object):
             if min_n == 1:
                 # no need to do any slicing for unigrams
                 # just iterate through the original tokens
+                # it's okay for `tokens` and `original_tokens` to be the same reference.
                 tokens = original_tokens
                 min_n += 1
             else:
